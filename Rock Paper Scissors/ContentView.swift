@@ -69,67 +69,51 @@ struct ContentView: View {
             Text("Your score is \(playerScore)")
         }
     }
-    
+ 
     func randomizeQuestion(){
         cpuChoice = Int.random(in: 0...2)
         shouldWin = Bool.random()
     }
     
     func checkIfUserWon(userChoice : String){
-        if choiceArray[cpuChoice] == userChoice{
-            alertTitle = "You lost"
+        let cpuSelectedOption =  choiceArray[cpuChoice]
+        let winningPairs : [String:String] = [
+            "Rock":"Paper",
+            "Paper":"Scissors",
+            "Scissors":"Paper"
+        ]
+        
+        if userChoice == choiceArray[cpuChoice]{
+            alertTitle = "You Lose"
             playerScore -= 1
         }
-        else if choiceArray[cpuChoice] == "Rock"{
-            if shouldWin{
-                if userChoice == "Paper"{
-                    playerScore += 1
-                    alertTitle = "You won"
-                }
-                else{
-                    alertTitle = "You lost"
-                }
+        else if shouldWin{
+            if winningPairs[cpuSelectedOption] == userChoice{
+                alertTitle = "You Won"
+                playerScore += 1
             }
             else{
-                if userChoice == "Scissors"{
-                    alertTitle = "You won"
-                    playerScore += 1
-                }
-                else{
-                    alertTitle = "You won"
-                    playerScore -= 1
-                }
-            }
-        }
-        else if choiceArray[cpuChoice] == "Paper"{
-            if shouldWin{
-                if userChoice == "Scissors"{
-                    alertTitle = "You won"
-                    playerScore += 1
-                }
-                else{
-                    alertTitle = "You lost"
-                    playerScore -= 1
-                }
-            }
-            else{
-                if userChoice == "Rock"{
-                    alertTitle = "You won"
-                    playerScore += 1
-                }
-                else{
-                    alertTitle = "You lost"
-                    playerScore -= 1
-                }
+                alertTitle = "You Lost"
+                playerScore -= 1
             }
         }
         else{
-            alertTitle = "You lost"
-            playerScore -= 1
+            if winningPairs[cpuSelectedOption] == userChoice{
+                alertTitle = "You Lose"
+                playerScore -= 1
+            }
+            else{
+                alertTitle = "You Won"
+                playerScore += 1
+            }
         }
         showingAlert = true
+        randomizeQuestion()
     }
 }
+
+
+
 
 #Preview {
     ContentView()
