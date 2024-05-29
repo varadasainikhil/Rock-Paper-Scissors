@@ -22,17 +22,48 @@ struct ContentView: View {
                 .ignoresSafeArea()
             
             VStack {
-                Text("Player Score")
-                Text("\(playerScore)")
-                Text("CPU's Move")
-                Text(choiceArray[cpuChoice])
+                Spacer()
+                
+                Text("Rock Paper Scissors")
+                    .font(.largeTitle.bold())
+                    .foregroundStyle(Color(.black))
+                
+                Spacer()
+                
+                HStack{
+                    Spacer()
+                    
+                    VStack{
+                        Text("Player Score")
+                            .font(.title2)
+                        Text("\(playerScore)")
+                            .font(.title.bold())
+                    }
+                    
+                    Spacer()
+                    
+                    VStack{
+                        Text("CPU's Move")
+                            .font(.title2)
+                        Text(choiceArray[cpuChoice])
+                            .font(.title.bold())
+                    }
+                    
+                    Spacer()
+                }
+                       
+                Spacer()
                 
                 if shouldWin{
                     Text("You should Win")
+                        .font(.title.bold())
                 }
                 else{
                     Text("You should Lose")
+                        .font(.title.bold())
                 }
+                
+                Spacer()
                 
                 HStack{
                     Spacer()
@@ -59,6 +90,9 @@ struct ContentView: View {
                     Spacer()
                 }
                 .padding()
+                
+                Spacer()
+                Spacer()
             }
         }
         .alert(alertTitle, isPresented: $showingAlert){
@@ -80,7 +114,7 @@ struct ContentView: View {
         let winningPairs : [String:String] = [
             "Rock":"Paper",
             "Paper":"Scissors",
-            "Scissors":"Paper"
+            "Scissors":"Rock"
         ]
         
         if userChoice == choiceArray[cpuChoice]{
@@ -108,12 +142,8 @@ struct ContentView: View {
             }
         }
         showingAlert = true
-        randomizeQuestion()
     }
 }
-
-
-
 
 #Preview {
     ContentView()
