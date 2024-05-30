@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var playerScore = 0
     @State private var showingAlert = false
     @State private var alertTitle = ""
+    @State private var numberOfQuestions = 1
     
     var body: some View {
         ZStack{
@@ -96,11 +97,27 @@ struct ContentView: View {
             }
         }
         .alert(alertTitle, isPresented: $showingAlert){
-            Button("Continue") {
-                randomizeQuestion()
+            if numberOfQuestions == 10 {
+                Button("Restart"){
+                    randomizeQuestion()
+                    playerScore = 0
+                    numberOfQuestions = 1
+                }
             }
+            else{
+                Button("Continue") {
+                    randomizeQuestion()
+                }
+            }
+            
         } message: {
-            Text("Your score is \(playerScore)")
+            if numberOfQuestions == 10{
+                Text("Your score is \(playerScore)/10")
+            }
+            else{
+                Text("Your score is \(playerScore)")
+            }
+            
         }
     }
  
@@ -141,7 +158,13 @@ struct ContentView: View {
                 playerScore += 1
             }
         }
+        numberOfQuestions += 1
+        if numberOfQuestions == 10 {
+            alertTitle = "Game Ended"
+        }
         showingAlert = true
+        
+        
     }
 }
 
